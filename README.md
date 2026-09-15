@@ -76,7 +76,7 @@ Once MariaDB is running with no image errors:
    Example:
 
    ```bash
-   kubectl cp "Downloads\guacamole\renana_is_the_queen\initdb.sql" mafat-world-server/mariadb-102-rhel7-649949db88-87c46:/var/lib/mysql -c mariadb-102-rhel7
+   kubectl cp "Downloads\guacamole\renana_rock\initdb.sql" mafat-world-server/mariadb-102-rhel7-649949db88-87c46:/var/lib/mysql -c mariadb-102-rhel7
    ```
 
    Check via the pod terminal (using `cd`, `ls`, etc.) that the copy worked.
