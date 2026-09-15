@@ -250,6 +250,7 @@ First, find the application's URL. In OpenShift, under **Networking** → **Rout
 You should see a screen like this:
 
 ![Guacamole login screen](Apache-Guacamole-Login.png)
+
 <sub>Image source: TECMINT linux blog.</sub>
 ---
 
