@@ -13,6 +13,12 @@ Guacamole protocol is basically the HTTP requests the client is making and sendi
 
 The webserver sends these actions to the Guacamole server, which reads these Guacamole protocol actions and forwards them to Guacd. Guacd is the proxy that interprets the Guacamole protocol into actual actions on various remote desktop connections such as RDP / VNC.
 
+The architecture is as shown below:
+
+<img src="guac-arch.png" width="400">
+
+<sub>Image source: Apache Guacamole documentation.</sub>
+
 ### Why OpenShift?
 
 OpenShift is our cloud services platform — for managing containers, VMs, etc.
@@ -76,7 +82,7 @@ Once MariaDB is running with no image errors:
    Example:
 
    ```bash
-   kubectl cp "Downloads\guacamole\renana_rock\initdb.sql" mafat-world-server/mariadb-102-rhel7-649949db88-87c46:/var/lib/mysql -c mariadb-102-rhel7
+   kubectl cp "Downloads\guacamole\renana_rock\initdb.sql" /mariadb-102-rhel7-649949db88-87c46:/var/lib/mysql -c mariadb-102-rhel7
    ```
 
    Check via the pod terminal (using `cd`, `ls`, etc.) that the copy worked.
@@ -125,7 +131,8 @@ In OpenShift → **Developer** → **Add** → **Container Image**, fill in thes
 
 > **Important:** whenever an environment variable is named `xxx_HOSTNAME`, it refers to another container (such as the DB or Guacd). It must match the actual name of your `guacd` and DB containers.
 
-Click **Deploy**, and make sure to complete the two post-deploy image steps described in the [Image Pull Secret](#3-openshift-application-deployment-using-a-container-image) section below.
+Click **Deploy**, and make sure to complete the two post-deploy image steps described in the [Image Pull Secret]
+[Section 3.1](#31-openshift-application-deployment-using-a-container-image) below.
 
 After the deployment finishes, edit it and add a command to the deployment YAML (under `spec` → `containers`) that runs `start.sh` inside the Guacamole container:
 
@@ -183,10 +190,10 @@ docker load < image.tar
 
 > You don't need to load `mariadb` this way — it's already available in Quay as `rhscl-mariadb-102-rhel7`. We use the RHEL image because it can run on OpenShift (it belongs to RHEL/Red Hat), while the standard image is built to run as root, which OpenShift does not allow.
 
-After loading the images locally, retag them in the Quay/CTS format and push them:
+After loading the images locally, retag them in the Quay  and push them:
 
 ```bash
-docker tag <current_image> <registry.marganit-1.idf.cts>/<YOUR_REGISTRY>/<NEW_NAME>
+docker tag <current_image> <registry>/<YOUR_REGISTRY>/<NEW_NAME>
 docker push <image>
 ```
 
@@ -242,21 +249,11 @@ First, find the application's URL. In OpenShift, under **Networking** → **Rout
 
 You should see a screen like this:
 
-![Guacamole login screen](guide-images/slide8-app-screen.jpeg)
-
+![Guacamole login screen](Apache-Guacamole-Login.png)
+<sub>Image source: TECMINT linux blog.</sub>
 ---
 
-## Appendix: Additional Screenshots
 
-Reference screenshots from the original deck (OpenShift deploy-image forms, storage/PVC setup, and related configuration screens):
 
-![Deploy image / resource & env config](guide-images/slide9-1.jpeg)
-![Deploy image form](guide-images/slide9-2.jpeg)
-![Deployment configuration](guide-images/slide9-3.jpeg)
-![Deployment configuration](guide-images/slide9-4.jpeg)
-![Deployment configuration](guide-images/slide9-5.jpeg)
-![Deployment configuration](guide-images/slide9-6.jpeg)
-![OpenShift configuration](guide-images/slide10-1.jpeg)
-![OpenShift configuration](guide-images/slide10-2.jpeg)
-![OpenShift configuration](guide-images/slide10-3.jpeg)
-![OpenShift configuration](guide-images/slide10-4.jpeg)
+
+
